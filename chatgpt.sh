@@ -14,7 +14,6 @@ rred(){ echo -e "\033[35m\033[01m$1\033[0m";}
 readtp(){ read -t5 -n26 -p "$(yellow "$1")" $2;}
 readp(){ read -p "$(yellow "$1")" $2;}
 [[ $EUID -ne 0 ]] && yellow "请以root模式运行脚本" && exit
-#[[ -e /etc/hosts ]] && grep -qE '^ *172.65.251.78 gitlab.com' /etc/hosts || echo -e '\n172.65.251.78 gitlab.com' >> /etc/hosts
 if [[ -f /etc/redhat-release ]]; then
 release="Centos"
 elif cat /etc/issue | grep -q -E -i "debian"; then
@@ -30,16 +29,13 @@ release="Ubuntu"
 elif cat /proc/version | grep -q -E -i "centos|red hat|redhat"; then
 release="Centos"
 else 
-red "不支持你当前系统，请选择使用Ubuntu,Debian,Centos系统。" && rm -f CFwarp.sh && exit
+red "不支持你当前系统，请选择使用Ubuntu,Debian,Centos系统。" && exit
 fi
 
 [[ $(type -P yum) ]] && yumapt='yum -y' || yumapt='apt -y'
-[[ $(type -P curl) ]] || (yellow "检测到curl未安装，升级安装中" && $yumapt update;$yumapt install curl)
 [[ ! $(type -P python3) ]] && (yellow "检测到python3未安装，升级安装中" && $yumapt update;$yumapt install python3)
-[[ ! $(type -P screen) ]] && (yellow "检测到screen未安装，升级安装中" && $yumapt update;$yumapt install screen)
 
 apt update && pip install -U pip && pip install openai aiogram 
-
 cat > TGchatgpt.py << EOF
 import openai
 from aiogram import Bot, types
@@ -73,12 +69,23 @@ readp "输入Telegram的token：" token
 sed -i "6 s/tgtoken/'$token'/" TGchatgpt.py
 readp "输入openai的apikey：" key
 sed -i "7 s/apikey/'$key'/" TGchatgpt.py
-python3 TGchatgpt.py
-[[ -e /root/TGchatgpt.py ]] && screen -S chatgpt -X quit ; screen -UdmS chatgpt /usr/bin/python3 /root/TGchatgpt.py'
-green "设置screen窗口名称'chatgpt'" && sleep 2
-grep -qE "^ *@reboot root screen -UdmS chatgpt /usr/bin/python3 /root/TGchatgpt.py >/dev/null 2>&1" /etc/crontab || echo "@reboot root screen -UdmS chatgpt /usr/bin/python3 /root/TGchatgpt.py >/dev/null 2>&1" >> /etc/crontab
-green "添加chatgpt在线守护进程功能"
 
+cat << EOF >/lib/systemd/system/Chatgpt.service
+[Unit]
+Description=ygkkk-Chatgpt Service
+After=network.target
+[Service]
+Restart=on-failure
+User=root
+ExecStart=/usr/bin/python3 /root/TGchatgpt.py
+[Install]
+WantedBy=multi-user.target
+EOF
+systemctl daemon-reload
+systemctl enable Chatgpt.service
+systemctl start Chatgpt.service
+
+green "Chatgpt Telegram机器人安装完毕"
 
 
 
