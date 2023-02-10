@@ -41,13 +41,10 @@ import openai
 from aiogram import Bot, types
 from aiogram.dispatcher import Dispatcher
 from aiogram.utils import executor
-
 token = 'tgtoken'
 openai.api_key = 'apikey'
-
 bot = Bot(token)
 dp = Dispatcher(bot)
-
 @dp.message_handler()
 async def send(message : types.Message):
     response = openai.Completion.create(
@@ -61,14 +58,13 @@ async def send(message : types.Message):
     stop=["You:"]
 )
     await message.answer(response['choices'][0]['text'])
-
 executor.start_polling(dp, skip_updates=True)
 EOF
 
 readp "输入Telegram的token：" token
-sed -i "6 s/tgtoken/'$token'/" TGchatgpt.py
+sed -i "5 s/tgtoken/'$token'/" TGchatgpt.py
 readp "输入openai的apikey：" key
-sed -i "7 s/apikey/'$key'/" TGchatgpt.py
+sed -i "6 s/apikey/'$key'/" TGchatgpt.py
 
 cat << EOF >/lib/systemd/system/Chatgpt.service
 [Unit]
