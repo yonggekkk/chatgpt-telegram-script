@@ -80,6 +80,7 @@ EOF
 systemctl daemon-reload
 systemctl enable Chatgpt.service
 systemctl start Chatgpt.service
+systemctl restart Chatgpt.service
 
 green "Chatgpt Telegram机器人安装完毕"
 
