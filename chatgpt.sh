@@ -58,7 +58,7 @@ if [[ $py3 -le 370 ]]; then
 yellow "检测到python3版本小于3.7.0，现在升级到3.7.3，升级时间比较长，请稍等……"
 wget -N https://www.python.org/ftp/python/3.7.3/Python-3.7.3.tgz
 tar -zxf Python-3.7.3.tgz
-yum install zlib-devel bzip2-devel openssl-devel ncurses-devel sqlite-devel readline-devel tk-devel gcc libffi-devel make -y
+$yumapt install zlib-devel bzip2-devel openssl-devel ncurses-devel sqlite-devel readline-devel tk-devel gcc libffi-devel make -y
 cd Python-3.7.3
 ./configure --prefix=/usr/local/python3.7
 make && make install
