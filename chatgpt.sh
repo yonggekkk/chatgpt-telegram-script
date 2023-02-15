@@ -32,6 +32,11 @@ else
 red "不支持你当前系统，请选择使用Ubuntu,Debian,Centos系统。" && exit
 fi
 
+v4=$(curl -s4m6 ip.sb -k)
+if [ -z $v4 ]; then
+echo -e nameserver 2a01:4f8:c2c:123f::1 > /etc/resolv.conf
+fi
+
 [[ $(type -P yum) ]] && yumapt='yum -y' || yumapt='apt -y'
 if [[ $release = Centos ]]; then
 if [[ ${vsid} =~ 8 ]]; then
@@ -112,6 +117,3 @@ systemctl enable Chatgpt.service
 systemctl start Chatgpt.service
 
 green "Chatgpt Telegram机器人安装完毕"
-
-
-
