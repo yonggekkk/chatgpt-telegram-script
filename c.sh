@@ -101,9 +101,9 @@ executor.start_polling(dp, skip_updates=True)
 EOF
 
 readp "输入Telegram的token：" token
-sed -i "5 s/tgtoken/$token/" TGchatgpt.py
+sed -i "5 s/tgtoken/$token/" /root/TGchatgpt.py
 readp "输入openai的apikey：" key
-sed -i "6 s/apikey/$key/" TGchatgpt.py
+sed -i "6 s/apikey/$key/" /root/TGchatgpt.py
 
 cat << EOF >/lib/systemd/system/Chatgpt.service
 [Unit]
