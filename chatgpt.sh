@@ -132,3 +132,4 @@ systemctl stop Chatgpt.service
 systemctl restart Chatgpt.service
 
 green "Chatgpt Telegram机器人安装完毕"
+journalctl -u Chatgpt.service
