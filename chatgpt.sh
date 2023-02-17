@@ -38,21 +38,13 @@ echo -e nameserver 2a01:4f8:c2c:123f::1 > /etc/resolv.conf
 fi
 
 [[ $(type -P yum) ]] && yumapt='yum -y' || yumapt='apt -y'
+$yumapt update
 if [[ $release = Centos ]]; then
-if [[ ${vsid} =~ 8 ]]; then
-cd /etc/yum.repos.d/ && mkdir backup && mv *repo backup/ 
-curl -o /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-8.repo
-sed -i -e "s|mirrors.cloud.aliyuncs.com|mirrors.aliyun.com|g " /etc/yum.repos.d/CentOS-*
-sed -i -e "s|releasever|releasever-stream|g" /etc/yum.repos.d/CentOS-*
-yum clean all && yum makecache
-fi
 yum install epel-release -y
 [[ ! $(type -P python3-devel) ]] && ($yumapt update;$yumapt install python3-devel python3 -y)
 else
-$yumapt update
 [[ ! $(type -P python3-pip) ]] && ($yumapt update;$yumapt install python3-pip -y)
 fi
-
 py3=`python3 -V  | awk '{print $2}' | tr -d '.'`
 if [[ $py3 -le 370 ]]; then
 yellow "检测到python3版本小于3.7.0，现在升级到3.7.3，升级时间比较长，请稍等……"
@@ -67,10 +59,9 @@ if [[ $co = 0 ]]; then
 green "升级python3成功"
 ln -sf /usr/local/python3.7/bin/python3.7 /usr/bin/python3
 else
-red "升级python3失败" 
+red "升级python3失败" && exit
 fi
 fi
-yellow "关闭防火墙，开放所有端口规则"
 systemctl stop firewalld.service >/dev/null 2>&1
 systemctl disable firewalld.service >/dev/null 2>&1
 setenforce 0 >/dev/null 2>&1
