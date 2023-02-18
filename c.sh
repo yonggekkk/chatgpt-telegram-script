@@ -125,3 +125,32 @@ systemctl restart Chatgpt.service
 
 green "Chatgpt Telegram机器人安装完毕"
 journalctl -u Chatgpt.service
+
+
+start_menu(){
+hysteriastatus
+clear
+green "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"           
+echo -e "${bblue} ░██     ░██      ░██ ██ ██         ░█${plain}█   ░██     ░██   ░██     ░█${red}█   ░██${plain}  "
+echo -e "${bblue}  ░██   ░██      ░██    ░░██${plain}        ░██  ░██      ░██  ░██${red}      ░██  ░██${plain}   "
+echo -e "${bblue}   ░██ ░██      ░██ ${plain}                ░██ ██        ░██ █${red}█        ░██ ██  ${plain}   "
+echo -e "${bblue}     ░██        ░${plain}██    ░██ ██       ░██ ██        ░█${red}█ ██        ░██ ██  ${plain}  "
+echo -e "${bblue}     ░██ ${plain}        ░██    ░░██        ░██ ░██       ░${red}██ ░██       ░██ ░██ ${plain}  "
+echo -e "${bblue}     ░█${plain}█          ░██ ██ ██         ░██  ░░${red}██     ░██  ░░██     ░██  ░░██ ${plain}  "
+green "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" 
+white "甬哥Github项目  ：github.com/yonggekkk"
+white "甬哥blogger博客 ：ygkkk.blogspot.com"
+white "甬哥YouTube频道 ：www.youtube.com/@ygkkk"
+red "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+green " 1. 安装hysteria（必选）" 
+green " 2. 卸载hysteria"
+green " 4. 关闭、开启、重启hysteria"    
+green " 6. 更改Telegram的token，"
+green " 8. ACME证书管理菜单"
+green " 9. 安装WARP（可选）"
+green " 0. 退出脚本"
+red "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+
+
+
+
