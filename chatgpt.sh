@@ -160,7 +160,7 @@ changechat(){
 if [[ ! -f '/root/TGchatgpt.py' ]]; then
 red "未正常安装Chatgpt" && exit
 fi
-green "Chatgpt配置变更选择如下:"
+green "Chatgpt参数变更选择如下:"
 readp "1. 更换Telegram的token\n2. 更换Openai的apikey\n请选择：" choose
 if [ $choose == "1" ];then
 tgtoken=`cat /root/TGchatgpt.py | sed -n 5p | awk '{print $3}'`
@@ -203,7 +203,7 @@ red "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 green " 1. 安装Chatgpt-TG通知" 
 green " 2. 卸载Chatgpt-TG通知"
 green " 3. 关闭、开启、重启Chatgpt"    
-green " 4. 更改TG的token 或 Openai的apikey"
+green " 4. 更换TG的token 或 Openai的apikey"
 green " 5. 查看Chatgpt-TG服务日志"
 green " 0. 退出脚本"
 red "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
