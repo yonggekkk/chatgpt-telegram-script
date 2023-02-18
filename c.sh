@@ -50,7 +50,7 @@ echo -e nameserver 2a01:4f8:c2c:123f::1 > /etc/resolv.conf
 fi
 }
 
-chat1(){
+inschat(){
 [[ $(type -P yum) ]] && yumapt='yum -y' || yumapt='apt -y'
 $yumapt update
 if [[ $release = Centos ]]; then
@@ -83,8 +83,8 @@ import openai
 from aiogram import Bot, types
 from aiogram.dispatcher import Dispatcher
 from aiogram.utils import executor
-token = 'tgtoken'
-openai.api_key = 'apikey'
+token = tgtoken
+openai.api_key = apikey
 bot = Bot(token)
 dp = Dispatcher(bot)
 @dp.message_handler()
@@ -102,16 +102,12 @@ async def send(message : types.Message):
     await message.answer(response['choices'][0]['text'])
 executor.start_polling(dp, skip_updates=True)
 EOF
-}
 
-chat2(){
 readp "输入Telegram的token：" token
-sed -i "5 s/tgtoken/$token/" /root/TGchatgpt.py
+sed -i "5 s/tgtoken/'$token'/" /root/TGchatgpt.py
 readp "输入openai的apikey：" key
-sed -i "6 s/apikey/$key/" /root/TGchatgpt.py
-}
+sed -i "6 s/apikey/'$key'/" /root/TGchatgpt.py
 
-chat3(){
 cat << EOF >/lib/systemd/system/Chatgpt.service
 [Unit]
 Description=ygkkk-Chatgpt Service
@@ -136,22 +132,25 @@ journalctl -u Chatgpt.service
 }
 
 stclre(){
-if [[ ! -f '/etc/tuic/tuic.json' ]]; then
-green "未正常安装tuic" && exit
+if [[ ! -f '/root/TGchatgpt.py' ]]; then
+red "未正常安装Chatgpt" && exit
 fi
-green "tuic服务执行以下操作"
+green "Chatgpt服务执行以下操作"
 readp "1. 重启\n2. 关闭\n3. 启动\n请选择：" action
 if [[ $action == "1" ]]; then
-systemctl restart tuic
-green "tuic服务重启\n"
+systemctl stop Chatgpt.service
+systemctl restart Chatgpt.service
+green "Chatgpt服务重启\n"
 elif [[ $action == "2" ]]; then
-systemctl stop tuic
-systemctl disable tuic
-green "tuic服务关闭\n"
+systemctl stop Chatgpt.service
+systemctl disable Chatgpt.service
+green "Chatgpt服务关闭\n"
 elif [[ $action == "3" ]]; then
-systemctl enable tuic
-systemctl start tuic
-green "tuic服务开启\n"
+systemctl enable Chatgpt.service
+systemctl start Chatgpt.service
+systemctl stop Chatgpt.service
+systemctl restart Chatgpt.service
+green "Chatgpt服务开启\n"
 else
 red "输入错误,请重新选择" && stclre
 fi
@@ -159,10 +158,10 @@ fi
 
 changechat(){
 if [[ ! -f '/root/TGchatgpt.py' ]]; then
-red "未正常安装chatgpt" && exit
+red "未正常安装Chatgpt" && exit
 fi
 green "Chatgpt配置变更选择如下:"
-readp "1. Telegram的token\n2. Openai的apikey\n请选择：" choose
+readp "1. 更换Telegram的token\n2. 更换Openai的apikey\n请选择：" choose
 if [ $choose == "1" ];then
 changeport
 elif [ $choose == "2" ];then
@@ -172,9 +171,6 @@ else
 red "请重新选择" && changechat
 fi
 }
-
-
-
 
 unins(){
 systemctl stop Chatgpt.service >/dev/null 2>&1
