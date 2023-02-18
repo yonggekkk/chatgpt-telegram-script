@@ -189,11 +189,10 @@ fi
 
 
 unins(){
-systemctl stop tuic >/dev/null 2>&1
-systemctl disable tuic >/dev/null 2>&1
-rm -f /etc/systemd/system/tuic.service
-rm -rf /usr/local/bin/tuic /etc/tuic /root/tuic /root/tuic.sh /usr/bin/tu
-green "tuic卸载完成！"
+systemctl stop Chatgpt.service >/dev/null 2>&1
+systemctl disable Chatgpt.service >/dev/null 2>&1
+rm -f /lib/systemd/system/Chatgpt.service /root/TGchatgpt.py
+green "Chatgpt-TG卸载完成！"
 }
 
 
