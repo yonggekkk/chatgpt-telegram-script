@@ -221,15 +221,11 @@ red "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 echo
 readp "请输入数字:" Input
 case "$Input" in     
- 1 ) instuic;;
+ 1 ) inschat;;
  2 ) unins;;
- 3 ) changeserv;;
- 4 ) stclre;;
- 5 ) uptuicyg;; 
- 6 ) uptuic;;
- 7 ) tuicshare;;
- 8 ) acme;;
- 9 ) cfwarp;;
+ 3 ) stclre;;
+ 4 ) changechat;;
+ 5 ) chatlog;;
  * ) exit 
 esac
 }
@@ -237,3 +233,19 @@ if [ $# == 0 ]; then
 start
 start_menu
 fi
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
