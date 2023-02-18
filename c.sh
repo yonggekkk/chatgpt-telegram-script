@@ -157,31 +157,19 @@ red "输入错误,请重新选择" && stclre
 fi
 }
 
-
-changeserv(){
-if [[ -z $(systemctl status tuic 2>/dev/null | grep -w active) && ! -f '/etc/tuic/tuic.json' ]]; then
-red "未正常安装tuic" && exit
+changechat(){
+if [[ ! -f '/root/TGchatgpt.py' ]]; then
+red "未正常安装chatgpt" && exit
 fi
-green "tuic配置变更选择如下:"
-readp "1. 变更端口\n2. 变更令牌码Token\n3. 重新申请证书或变更证书路径\n4. 返回上层\n请选择：" choose
+green "Chatgpt配置变更选择如下:"
+readp "1. Telegram的token\n2. Openai的apikey\n请选择：" choose
 if [ $choose == "1" ];then
 changeport
 elif [ $choose == "2" ];then
 changepswd
-elif [ $choose == "3" ];then
-inscertificate
-oldcer=`cat /etc/tuic/tuic.json 2>/dev/null | sed -n 4p | awk '{print $2}' | tr -d ',"'`
-oldkey=`cat /etc/tuic/tuic.json 2>/dev/null | sed -n 5p | awk '{print $2}' | tr -d ',"'`
-sed -i "s#$oldcer#${certificatec}#g" /etc/tuic/tuic.json
-sed -i "s#$oldkey#${certificatep}#g" /etc/tuic/tuic.json
-oldym=`cat /root/tuic/v2rayn.json 2>/dev/null | sed -n 3p | awk '{print $2}' | tr -d ',"'`
-sed -i "s/$oldym/${ym}/g" /root/tuic/v2rayn.json
-sed -i "3s/$oldym/${ym}/g" /root/tuic/tuic.txt
-susstuic
-elif [ $choose == "4" ];then
-tu
+
 else 
-red "请重新选择" && changeserv
+red "请重新选择" && changechat
 fi
 }
 
@@ -213,7 +201,7 @@ red "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 green " 1. 安装Chatgpt-TG通知" 
 green " 2. 卸载Chatgpt-TG通知"
 green " 3. 关闭、开启、重启Chatgpt"    
-green " 4. 更改TG的token;Openai的apikey"
+green " 4. 更改TG的token 或 Openai的apikey"
 green " 5. 查看Chatgpt-TG服务日志"
 green " 0. 退出脚本"
 red "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
