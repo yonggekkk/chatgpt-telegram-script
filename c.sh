@@ -105,7 +105,7 @@ EOF
 
 readp "输入Telegram的token：" token
 sed -i "5 s/tgtoken/'$token'/" /root/TGchatgpt.py
-readp "输入openai的apikey：" key
+readp "输入Openai的apikey：" key
 sed -i "6 s/apikey/'$key'/" /root/TGchatgpt.py
 
 cat << EOF >/lib/systemd/system/Chatgpt.service
@@ -163,10 +163,17 @@ fi
 green "Chatgpt配置变更选择如下:"
 readp "1. 更换Telegram的token\n2. 更换Openai的apikey\n请选择：" choose
 if [ $choose == "1" ];then
-changeport
+tgtoken=`cat /root/TGchatgpt.py | sed -n 5p | awk '{print $3}'`
+readp "输入Telegram的token：" token
+sed -i "5 s/$tgtoken/'$token'/" /root/TGchatgpt.py
+systemctl stop Chatgpt.service
+systemctl restart Chatgpt.service
 elif [ $choose == "2" ];then
-changepswd
-
+apikey=`cat /root/TGchatgpt.py | sed -n 6p | awk '{print $3}'`
+readp "输入Openai的apikey：" key
+sed -i "6 s/$apikey/'$key'/" /root/TGchatgpt.py
+systemctl stop Chatgpt.service
+systemctl restart Chatgpt.service
 else 
 red "请重新选择" && changechat
 fi
@@ -178,7 +185,6 @@ systemctl disable Chatgpt.service >/dev/null 2>&1
 rm -f /lib/systemd/system/Chatgpt.service /root/TGchatgpt.py
 green "Chatgpt-TG卸载完成！"
 }
-
 
 start_menu(){
 clear
@@ -216,19 +222,3 @@ if [ $# == 0 ]; then
 start
 start_menu
 fi
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
