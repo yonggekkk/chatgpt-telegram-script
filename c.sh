@@ -74,7 +74,8 @@ iptables -F >/dev/null 2>&1
 iptables -X >/dev/null 2>&1
 netfilter-persistent save >/dev/null 2>&1
 
-pip3 install -U pip && pip3 install openai aiogram 
+pip3 install -U pip
+python3 -m pip install openai aiogram 
 cat > /root/TGchatgpt.py << EOF
 import openai
 from aiogram import Bot, types
