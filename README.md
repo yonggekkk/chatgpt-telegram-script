@@ -1,4 +1,4 @@
-### 支持纯IPV4、纯IPV6的VPS直接安装，主流linux系统均支持
+### 支持纯IPV4、纯IPV6的VPS直接安装，主流linux系统均支持，建议使用最新的系统版本
 ### 相关说明及注意点请查看[博客说明](https://ygkkk.blogspot.com/2023/02/chatgpt-warp.html)
 
 ### 一键脚本(gpt-3.5-turbo) 
