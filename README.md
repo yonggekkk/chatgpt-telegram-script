@@ -4,6 +4,7 @@
 ### TG聊天支持上下文自动关联，输入 /start 可重置关联的聊天记录 
 ### 相关说明及注意点请查看[博客说明](https://ygkkk.blogspot.com/2023/02/chatgpt-warp.html)
 
+## 注意：请确保你的chatgpt账户有余额哦。API是收费的，不然无法使用。。
 ### 一键脚本(gpt-3.5-turbo) 
 ```
 bash <(curl -sSL https://gitlab.com/rwkgyg/chatgptbot/raw/main/chatgpt.sh)
